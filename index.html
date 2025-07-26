@@ -2,61 +2,79 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Simple Document Form</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap 5 CSS CDN -->
+  <title>Bootstrap Form Verification Example</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-  <div class="container mt-5">
-    <h2>Document Form</h2>
-    <form>
-      <!-- Name -->
-      <div class="mb-3">
-        <label for="name" class="form-label">Full Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Enter your full name">
+<body class="bg-light">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form id="myForm" class="needs-validation bg-white p-4 rounded shadow" novalidate>
+          <div class="mb-3">
+            <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="name" name="name" required>
+            <div class="invalid-feedback">
+              Please enter your name.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+            <input type="email" class="form-control" id="email" name="email" required>
+            <div class="invalid-feedback">
+              Please enter a valid email address.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="birthday" class="form-label">Birthday<span class="text-danger">*</span></label>
+            <input type="date" class="form-control" id="birthday" name="birthday" required>
+            <div class="invalid-feedback">
+              Please select your birthday.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label d-block">Gender<span class="text-danger">*</span></label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
+              <label class="form-check-label" for="male">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
+              <label class="form-check-label" for="female">Female</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="other" value="other" required>
+              <label class="form-check-label" for="other">Other</label>
+              <div class="invalid-feedback d-block">
+                Please select your gender.
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-primary w-100" type="submit">Submit</button>
+        </form>
       </div>
-      <!-- Document Type -->
-      <div class="mb-3">
-        <label for="docType" class="form-label">Document Type</label>
-        <select class="form-select" id="docType">
-          <option selected disabled>Choose document type</option>
-          <option value="passport">Passport</option>
-          <option value="id">ID Card</option>
-          <option value="driver">Driver's License</option>
-        </select>
-      </div>
-      <!-- Document Number -->
-      <div class="mb-3">
-        <label for="docNumber" class="form-label">Document Number</label>
-        <input type="text" class="form-control" id="docNumber" placeholder="Enter document number">
-      </div>
-      <!-- Birthdate -->
-      <div class="mb-3">
-        <label for="birthdate" class="form-label">Birthdate</label>
-        <input type="date" class="form-control" id="birthdate">
-      </div>
-      <!-- Gender -->
-      <div class="mb-3">
-        <label class="form-label d-block">Gender</label>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male">
-          <label class="form-check-label" for="genderMale">Male</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female">
-          <label class="form-check-label" for="genderFemale">Female</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="gender" id="genderOther" value="other">
-          <label class="form-check-label" for="genderOther">Other</label>
-        </div>
-      </div>
-      <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
   </div>
-  <!-- Bootstrap 5 JS Bundle CDN (includes Popper) -->
+  <script>
+    // Bootstrap validation
+    (function () {
+      'use strict'
+      var forms = document.querySelectorAll('.needs-validation')
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+      // Set birthday to 20 years ago by default
+      const birthdayInput = document.getElementById('birthday');
+      const today = new Date();
+      const twentyYearsAgo = new Date(today.getFullYear() - 20, today.getMonth(), today.getDate());
+      birthdayInput.value = twentyYearsAgo.toISOString().split('T')[0];
+    })()
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
